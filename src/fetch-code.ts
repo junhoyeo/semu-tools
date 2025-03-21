@@ -43,17 +43,21 @@ namespace TossSecurities {
   };
 }
 
+const PRFIXES_TO_BE_REMOVED = [
+  'INC',
+  'CORPORATION',
+  'LTD',
+  'OYJ ADR EACH REPR 1 ORD NPV',
+];
 export const fetchISINCode = async (query: string) => {
   let cleanedQuery = query.trim();
-  if (cleanedQuery.endsWith(' INC')) {
-    cleanedQuery = cleanedQuery.replaceAll(' INC', '');
+
+  for (const prefix of PRFIXES_TO_BE_REMOVED) {
+    if (cleanedQuery.endsWith(` ${prefix}`)) {
+      cleanedQuery = cleanedQuery.replaceAll(` ${prefix}`, '');
+    }
   }
-  if (cleanedQuery.endsWith(' CORPORATION')) {
-    cleanedQuery = cleanedQuery.replaceAll(' CORPORATION', '');
-  }
-  if (cleanedQuery.endsWith(' LTD')) {
-    cleanedQuery = cleanedQuery.replaceAll(' LTD', '');
-  }
+
   const data = await ky.post<
     TossSecurities.WTSAutoCompleteResponse<TossSecurities.ProductSection>
   >('https://wts-info-api.tossinvest.com/api/v3/search-all/wts-auto-complete', {
