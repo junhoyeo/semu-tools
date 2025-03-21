@@ -2,14 +2,16 @@
   "name": "semu-tools",
   "version": "1.0.0",
   "scripts": {
-    "start": "tsx src/stock.ts"
+    "start": "tsx src/index.ts"
   },
   "dependencies": {
     "ky": "^1.7.5",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^22.13.11",
+    "prettier": "^3.5.3",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   },
